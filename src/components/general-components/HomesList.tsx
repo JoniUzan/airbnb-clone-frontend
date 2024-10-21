@@ -35,6 +35,11 @@ function HomesList({
     setCurrentPage(pageNumber);
   };
 
+  // Check if homes is an array before using map
+  if (!Array.isArray(homes)) {
+    return <p>No homes found.</p>;
+  }
+
   if (isLoading) {
     return (
       <div className="w-full flex justify-between min-h-screen">
@@ -54,10 +59,6 @@ function HomesList({
         <Skeleton className="w-[37%] h-[80vh] sticky top-40" />
       </div>
     );
-  }
-
-  if (!homes || homes.length === 0) {
-    return <p>No homes found.</p>;
   }
 
   return (
@@ -107,6 +108,7 @@ function HomesList({
     </div>
   );
 }
+
 
 
 export default HomesList;
