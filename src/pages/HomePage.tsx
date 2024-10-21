@@ -120,7 +120,7 @@ function HomePage() {
           isHomePage={true}
           wishlistName=""
         />
-        {position && <GoogleMap homes={homes} position={position} />}
+        {/* {position && <GoogleMap homes={homes} position={position} />} */}
       </div>
     </>
   );
