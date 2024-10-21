@@ -61,6 +61,8 @@ let position
 
 
 if(!isLoading && homes.length > 0 )
+  console.log(homes[0]);
+  
    position = homes.length > 0 && {
     lat: homes[0].loc.lat||0,
     lng: homes[0].loc.lan||0,
