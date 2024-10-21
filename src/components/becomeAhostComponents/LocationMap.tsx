@@ -7,7 +7,7 @@ import usePlacesAutocomplete, {
 
 import { useOutletContext } from "react-router-dom";
 import { Home } from "@/layouts/BecomeAhostLayout";
-import { googleApi } from "@/lib/googleApiKey";
+// import { googleApi } from "@/lib/googleApiKey";
 
 interface LatLng {
   lat: number;
@@ -26,7 +26,7 @@ export default function LocationMap({
   setLocationData,
 }: LocationMapProps) {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: googleApi,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
 

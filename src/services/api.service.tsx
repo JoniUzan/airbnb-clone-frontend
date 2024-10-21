@@ -2,7 +2,9 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    process.env.NODE_ENV === "production" ? "/api" : "//localhost:3000/api",
+    import.meta.env.MODE === "production"
+      ? import.meta.env.VITE_BACKEND_BASE_URL
+      : "http://localhost:3000/api", // Ensure you include "http://" or "https://" for localhost
 });
 
 api.interceptors.request.use(
