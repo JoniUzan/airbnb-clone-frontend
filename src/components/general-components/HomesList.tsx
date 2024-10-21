@@ -17,26 +17,23 @@ type HomesListProps = {
 };
 
 function HomesList({
-  homes,
+  homes = [], // Default homes to an empty array
   isLoading,
   totalHomes,
   isHomePage,
   wishlistName,
 }: HomesListProps) {
-  const { currency,  } = useCurrency();
+  const { currency } = useCurrency();
   const [currentPage, setCurrentPage] = useState(1);
   const homesPerPage = 18;
   const [searchParams, setSearchParams] = useSearchParams();
+  
   const paginate = (pageNumber: number) => {
     const params: Record<string, string> = {};
     params.page = String(pageNumber);
     updateSearchParams(params, searchParams, setSearchParams);
     setCurrentPage(pageNumber);
   };
-
-  if (!homes) {
-    return <p>No homes found.</p>;
-  }
 
   if (isLoading) {
     return (
@@ -59,11 +56,15 @@ function HomesList({
     );
   }
 
+  if (!homes || homes.length === 0) {
+    return <p>No homes found.</p>;
+  }
+
   return (
     <div className="w-full flex flex-col items-center justify-evenly mx-8 lg:ml-8 lg:mr-0">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 ">
-        {homes?.map((home) => (
-          <div key={home._id} className="">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        {homes.map((home) => (
+          <div key={home._id}>
             <HomeCarousel
               images={home.imgUrls}
               name={home.name}
@@ -106,5 +107,6 @@ function HomesList({
     </div>
   );
 }
+
 
 export default HomesList;
