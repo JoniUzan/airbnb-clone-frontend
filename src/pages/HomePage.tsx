@@ -57,7 +57,8 @@ function HomePage() {
 
 let position
 
-if(homes[0].loc.lat&&homes[0].loc.lan ){
+
+if(homes[0]){
 position = {  
   lat: homes[0].loc.lat||0,
   lng: homes[0].loc.lan||0,
