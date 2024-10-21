@@ -56,19 +56,15 @@ function HomePage() {
   });
 
 
+let position
 
 
 
-  const position= {
-    lat:0,
-    lng:0
-  }
-
-
-  // const position = homes.length > 0 && {
-  //   lat: homes[0].loc.lat||0,
-  //   lng: homes[0].loc.lan||0,
-  // };
+if(!isLoading && homes.length > 0 )
+   position = homes.length > 0 && {
+    lat: homes[0].loc.lat||0,
+    lng: homes[0].loc.lan||0,
+  };
 
   return (
     <>
