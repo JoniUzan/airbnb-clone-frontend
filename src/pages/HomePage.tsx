@@ -55,18 +55,16 @@ function HomePage() {
     queryFn: () => fetchHomeCountByFilers(filters),
   });
 
+  const position =
+  homes.length > 0 &&
+  homes[0].loc?.lat !== undefined &&
+  homes[0].loc?.lan !== undefined
+    ? {
+        lat: homes[0].loc.lat,
+        lng: homes[0].loc.lan,
+      }
+    : undefined;
 
-let position
-
-
-
-if(!isLoading && homes.length > 0 )
-  console.log(homes[0]);
-  
-   position = homes.length > 0 && {
-    lat: homes[0].loc.lat||0,
-    lng: homes[0].loc.lan||0,
-  };
 
   return (
     <>
@@ -118,7 +116,7 @@ if(!isLoading && homes.length > 0 )
           isHomePage={true}
           wishlistName=""
         />
-        {/* {position && <GoogleMap homes={homes} position={position} />} */}
+        {position && <GoogleMap homes={homes} position={position} />}
       </div>
     </>
   );
