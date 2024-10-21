@@ -55,10 +55,24 @@ function HomePage() {
     queryFn: () => fetchHomeCountByFilers(filters),
   });
 
-  const position = homes.length > 0 && {
-    lat: homes[0].loc.lat||0,
-    lng: homes[0].loc.lan||0,
-  };
+let position
+
+if(homes[0].loc.lat&&homes[0].loc.lan ){
+position = {  
+  lat: homes[0].loc.lat||0,
+  lng: homes[0].loc.lan||0,
+}
+}else{
+  position= {
+    lat:0,
+    lng:0
+  }
+}
+
+  // const position = homes.length > 0 && {
+  //   lat: homes[0].loc.lat||0,
+  //   lng: homes[0].loc.lan||0,
+  // };
 
   return (
     <>
