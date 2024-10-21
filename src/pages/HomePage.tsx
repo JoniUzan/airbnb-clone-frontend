@@ -56,8 +56,8 @@ function HomePage() {
   });
 
   const position = homes.length > 0 && {
-    lat: homes[0].loc.lat,
-    lng: homes[0].loc.lan,
+    lat: homes[0].loc.lat||0,
+    lng: homes[0].loc.lan||0,
   };
 
   return (
