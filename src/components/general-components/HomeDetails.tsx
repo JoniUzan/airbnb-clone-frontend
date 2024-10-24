@@ -426,7 +426,7 @@ function HomeDetails() {
             <img
               src={home.imgUrls[0]}
               alt={`${home.name} - Main Image`}
-              className="w-full h-[300px] object-cover rounded-lg"
+              className="w-full h-[400px] object-cover rounded-lg"
             />
           </div>
 
@@ -437,7 +437,7 @@ function HomeDetails() {
                 key={index}
                 src={url}
                 alt={`${home.name} - Image ${index + 1}`}
-                className="w-full h-[calc(300px/2-2px)] object-cover rounded-lg"
+                className="w-full h-[calc(400px/2-2px)] object-cover rounded-lg"
               />
             ))}
           </div>

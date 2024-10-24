@@ -2,11 +2,11 @@ import { IHome } from "@/types";
 import { Star } from "lucide-react";
 import HomeCarousel from "./HomeCarousel";
 import { calculateOverallAverageRating, updateSearchParams } from "@/lib/utils";
-import { Skeleton } from "../ui/skeleton";
 import Pagination from "./Pagination";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useCurrency } from "@/providers/CurrencyContext";
+import HomeListSkeleton from "./HomeListSkeleton";
 
 type HomesListProps = {
   homes: IHome[] | undefined; // Define homes as an array of IHome objects
@@ -27,7 +27,7 @@ function HomesList({
   const [currentPage, setCurrentPage] = useState(1);
   const homesPerPage = 18;
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const paginate = (pageNumber: number) => {
     const params: Record<string, string> = {};
     params.page = String(pageNumber);
@@ -42,27 +42,12 @@ function HomesList({
 
   if (isLoading) {
     return (
-      <div className="w-full flex justify-between min-h-screen">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 ml-16">
-          {Array.from({ length: 18 }, (_, index) => (
-            <div key={index}>
-              <Skeleton className="h-[270px] w-[270px] rounded-xl mb-2" />
-              <div className="flex justify-between items-center">
-                <Skeleton className="h-5 w-[200px] mb-1" />
-                <Skeleton className="h-5 w-[30px]" />
-              </div>
-              <Skeleton className="h-5 w-[150px] mb-2" />
-              <Skeleton className="h-5 w-[100px] mb-1" />
-            </div>
-          ))}
-        </div>
-        <Skeleton className="w-[37%] h-[80vh] sticky top-40" />
-      </div>
+      <HomeListSkeleton/>
     );
   }
 
   return (
-    <div className="w-full flex flex-col items-center justify-evenly mx-8 lg:ml-8 lg:mr-0">
+    <div className="w-full flex flex-col items-center justify-evenly mx-8 lg:ml-8 lg:mr-0 mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         {homes.map((home) => (
           <div key={home._id}>
@@ -108,7 +93,5 @@ function HomesList({
     </div>
   );
 }
-
-
 
 export default HomesList;
