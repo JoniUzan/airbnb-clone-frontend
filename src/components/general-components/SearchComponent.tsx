@@ -35,24 +35,12 @@ function SearchComponent({
       name: "Amazing Views",
     },
     {
-      icon: "https://a0.muscache.com/pictures/6ad4bd95-f086-437d-97e3-14d12155ddfe.jpg",
-      name: "Country Side",
-    },
-    {
       icon: "https://a0.muscache.com/pictures/c8e2ed05-c666-47b6-99fc-4cb6edcde6b4.jpg",
       name: "Luxe",
     },
     {
       icon: "https://a0.muscache.com/pictures/677a041d-7264-4c45-bb72-52bff21eb6e8.jpg",
       name: "Lakefront",
-    },
-    {
-      icon: "https://a0.muscache.com/pictures/51f5cf64-5821-400c-8033-8a10c7787d69.jpg",
-      name: "Hanoks",
-    },
-    {
-      icon: "https://a0.muscache.com/pictures/757deeaa-c78f-488f-992b-d3b1ecc06fc9.jpg",
-      name: "Ski in/out",
     },
     {
       icon: "https://a0.muscache.com/pictures/50861fca-582c-4bcc-89d3-857fb7ca6528.jpg",
@@ -65,10 +53,6 @@ function SearchComponent({
     {
       icon: "https://a0.muscache.com/pictures/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg",
       name: "OMG!",
-    },
-    {
-      icon: "https://a0.muscache.com/pictures/1b6a8b70-a3b6-48b5-88e1-2243d9172c06.jpg",
-      name: "Catles",
     },
     {
       icon: "https://a0.muscache.com/pictures/732edad8-3ae0-49a8-a451-29a8010dcc0c.jpg",
@@ -107,10 +91,6 @@ function SearchComponent({
       name: "Tiny homes",
     },
     {
-      icon: "https://a0.muscache.com/pictures/3726d94b-534a-42b8-bca0-a0304d912260.jpg",
-      name: "Trending",
-    },
-    {
       icon: "https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg",
       name: "Surfing",
     },
@@ -131,20 +111,8 @@ function SearchComponent({
       name: "Golfing",
     },
     {
-      icon: "https://a0.muscache.com/pictures/7630c83f-96a8-4232-9a10-0398661e2e6f.jpg",
-      name: "Rooms",
-    },
-    {
-      icon: "https://a0.muscache.com/pictures/c0fa9598-4e37-40f3-b734-4bd0e2377add.jpg",
-      name: "New",
-    },
-    {
       icon: "https://a0.muscache.com/pictures/5ed8f7c7-2e1f-43a8-9a39-4edfc81a3325.jpg",
       name: "Bed & breakfast",
-    },
-    {
-      icon: "https://a0.muscache.com/pictures/ddd13204-a5ae-4532-898c-2e595b1bb15f.jpg",
-      name: "Chef's kitchen",
     },
     {
       icon: "https://a0.muscache.com/pictures/d7445031-62c4-46d0-91c3-4f29f9790f7a.jpg",
