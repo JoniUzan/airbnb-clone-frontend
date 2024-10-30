@@ -57,7 +57,7 @@ const monthNames = [
 ];
 
 function HomeDetails() {
-  const { currency, } = useCurrency();
+  const { currency } = useCurrency();
   const { guestCounts } = useGuestContext();
   const { id } = useParams<{ id: string }>();
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
@@ -278,9 +278,9 @@ function HomeDetails() {
     <div id="photos">
       {/* New Sticky Header */}
       {isStickyHeaderVisible && (
-        <div className="sticky top-0 bg-white border-b z-50 h-20 ">
-          <div className="p-4 px-16 flex justify-between items-center self-center h-full">
-            <div>
+        <div className="sticky top-0 bg-white border-b z-50 h-20">
+          <div className="p-4 px-4 md:px-16 flex justify-between items-center self-center h-full">
+            <div className="">
               <ScrollLink
                 to="photos"
                 smooth={true}
@@ -314,33 +314,31 @@ function HomeDetails() {
                 Location
               </ScrollLink>
             </div>
-            <div>
+            <div className="w-full md:w-auto">
               {!isPriceCardButtonVisible &&
                 (checkDates === undefined || guestCounts.adults === 0 ? (
-                  <div className="flex gap-4 items-center">
-                    <div className="flex flex-col">
+                  <div className="flex gap-4 items-center justify-end">
+                    <div className="hidden md:flex flex-col">
                       <p>Add dates for prices</p>
-                      <p>
-                        <div className="text-xs flex items-center gap-1">
-                          <div className="flex items-center gap-1">
-                            <Star fill="black" width="12px" />
-                            {home.reviews.length > 0 ? (
-                              <p className="font-semibold">
-                                {calculateOverallAverageRating(home.reviews)}
-                              </p>
-                            ) : (
-                              <p>New</p>
-                            )}
-                          </div>
-                          {home.reviews.length > 0 && (
-                            <>
-                              <span className=" text-black">•</span>
-                              {home.reviews.length} review
-                              {home.reviews.length > 1 ? "s" : ""}
-                            </>
+                      <div className="text-xs flex items-center gap-1">
+                        <div className="flex items-center gap-1">
+                          <Star fill="black" width="12px" />
+                          {home.reviews.length > 0 ? (
+                            <p className="font-semibold">
+                              {calculateOverallAverageRating(home.reviews)}
+                            </p>
+                          ) : (
+                            <p>New</p>
                           )}
                         </div>
-                      </p>
+                        {home.reviews.length > 0 && (
+                          <>
+                            <span className="text-black">•</span>
+                            {home.reviews.length} review
+                            {home.reviews.length > 1 ? "s" : ""}
+                          </>
+                        )}
+                      </div>
                     </div>
                     <ScrollLink
                       to="amenitiesButton"
@@ -348,44 +346,40 @@ function HomeDetails() {
                       duration={500}
                     >
                       <Button
-                        variant={"secondary"}
-                        className="text-white p-6 px-1 rounded-lg text-md mr-8"
+                        variant="secondary"
+                        className="text-white p-6 px-1 rounded-lg text-md mr-2 md:mr-8 md:flex hidden "
                       >
                         Check availability
                       </Button>
                     </ScrollLink>
                   </div>
                 ) : (
-                  <div className="flex gap-4 items-center">
-                    <div className="flex flex-col">
+                  <div className="flex gap-4 items-center justify-end">
+                    <div className="hidden md:flex flex-col">
                       <p className="flex justify-center items-center gap-1">
-                        <span className="font-semibold">{homePrice}</span>{" "}
+                        <span className="font-semibold">{homePrice}</span>
                         <span className="text-xs">night</span>
                       </p>
-                      <p>
-                        <div className="text-xs flex items-center gap-1">
-                          <div className="flex items-center gap-1">
-                            <Star fill="black" width="12px" />
-                            {home.reviews.length > 0 ? (
-                              <p className="font-semibold">
-                                {calculateOverallAverageRating(home.reviews)}
-                              </p>
-                            ) : (
-                              <p>New</p>
-                            )}
-                          </div>
-                          {home.reviews.length > 0 && (
-                            <>
-                              {" "}
-                              <span className=" text-black">•</span>
-                              {home.reviews.length} review
-                              {home.reviews.length > 1 ? "s" : ""}
-                            </>
+                      <div className="text-xs flex items-center gap-1">
+                        <div className="flex items-center gap-1">
+                          <Star fill="black" width="12px" />
+                          {home.reviews.length > 0 ? (
+                            <p className="font-semibold">
+                              {calculateOverallAverageRating(home.reviews)}
+                            </p>
+                          ) : (
+                            <p>New</p>
                           )}
                         </div>
-                      </p>
+                        {home.reviews.length > 0 && (
+                          <>
+                            <span className="text-black">•</span>
+                            {home.reviews.length} review
+                            {home.reviews.length > 1 ? "s" : ""}
+                          </>
+                        )}
+                      </div>
                     </div>
-
                     <NavLink
                       to={`/reservation/${
                         home._id
@@ -400,8 +394,8 @@ function HomeDetails() {
                       }`}
                     >
                       <Button
-                        variant={"secondary"}
-                        className="text-white p-6 px-10 rounded-lg text-md mr-8"
+                        variant="secondary"
+                        className="text-white p-6 px-1 rounded-lg text-md mr-2 md:mr-8 md:flex hidden "
                       >
                         Reserve
                       </Button>
@@ -413,41 +407,37 @@ function HomeDetails() {
         </div>
       )}
 
-      <div className="px-20">
+      <div className="px-4 md:px-20">
         <div className="flex justify-between items-center">
-          {/* Name */}
-          <h1 className="text-2xl font-semibold">{home.name}</h1>
+          <h1 className="text-xl md:text-2xl font-semibold">{home.name}</h1>
         </div>
 
         {/* Images */}
-        <div className="flex mt-4">
-          {/* Large Image */}
-          <div className="w-1/2 pr-2">
+        <div className="flex flex-col md:flex-row mt-4">
+          <div className="w-full md:w-1/2 md:pr-2 mb-2 md:mb-0">
             <img
               src={home.imgUrls[0]}
               alt={`${home.name} - Main Image`}
-              className="w-full h-[400px] object-cover rounded-lg"
+              className="w-full h-[300px] md:h-[400px] object-cover rounded-lg"
             />
           </div>
-
-          {/* Small Images */}
-          <div className="w-1/2 grid grid-cols-2 gap-2 h-[300px]">
+          <div className="w-full md:w-1/2 grid grid-cols-2 gap-2">
             {home.imgUrls.slice(1, 5).map((url, index) => (
               <img
                 key={index}
                 src={url}
                 alt={`${home.name} - Image ${index + 1}`}
-                className="w-full h-[calc(400px/2-2px)] object-cover rounded-lg"
+                className="w-full h-[150px] md:h-[calc(400px/2-2px)] object-cover rounded-lg"
               />
             ))}
           </div>
         </div>
 
-        <div className="flex gap-24 mt-4">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-24 mt-4">
           {/* Room Type */}
-          <div className="w-[80rem]">
+          <div className="w-full lg:w-[80rem]">
             <div className="mt-4">
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-lg md:text-xl font-semibold">
                 {home.roomType} in {home.loc.address}
               </h2>
             </div>
@@ -498,15 +488,15 @@ function HomeDetails() {
             </div>
             <hr className="mt-6" />
             {/* Host Details */}
-            <div className="flex items-center justify-between mt-5">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-5">
+              <div className="flex items-center gap-4 mb-4 md:mb-0">
                 <img
                   src={home.host.imgUrl}
                   alt={home.host.fullname}
                   className="w-10 h-10 rounded-full mt-2"
                 />
                 <div>
-                  <h2 className="font-semibold ">
+                  <h2 className="font-semibold">
                     Hosted by {home.host.fullname}
                   </h2>
                   {home.host.isSuperhost && (
@@ -647,17 +637,18 @@ function HomeDetails() {
             {/* Amenities */}
             <div className="mt-10">
               <h2 className="text-xl font-semibold">What this place offers</h2>
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 {home.amenities.slice(0, 10).map((amenity, index) => {
                   const amenityKey = amenity as AmenityKey;
                   return (
                     <div key={index} className="flex items-center space-x-2">
-                      {iconMap[amenityKey] || <div className="w-6 h-6" />}{" "}
+                      {iconMap[amenityKey] || <div className="w-6 h-6" />}
                       <p>{amenity}</p>
                     </div>
                   );
                 })}
               </div>
+
               {home.amenities.length > 10 && (
                 <Dialog>
                   <DialogTrigger id="amenitiesButton">
@@ -695,7 +686,7 @@ function HomeDetails() {
             </div>
             <hr className="mt-10" />
             {/* dates */}
-            <div className="mt-10 flex flex-col gap-2">
+            <div className="mt-10 flex flex-col gap-2 overflow-x-auto">
               <div className="flex flex-col gap-2">
                 <p className="text-xl font-600">Select check-in date</p>
                 <p className="text-xs text-gray-600 font-500">
@@ -705,9 +696,9 @@ function HomeDetails() {
               <Calendar
                 classNames={{
                   months:
-                    "flex w-full flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 flex-1",
-                  month: "space-y-4 w-full flex flex-col",
-                  table: "w-full h-full border-collapse space-y-1",
+                    "flex w-full flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                  month: "space-y-4 w-full md:w-1/2",
+                  table: "w-full border-collapse space-y-1",
                   head_row: "",
                   row: "w-full mt-2",
                 }}
@@ -718,7 +709,9 @@ function HomeDetails() {
                   handleDateChange(ev as DateRange | undefined);
                 }}
                 fromDate={new Date()}
-                numberOfMonths={2}
+                numberOfMonths={
+                  window.matchMedia("(min-width: 1024px)").matches ? 2 : 1
+                }
                 initialFocus
               />
               <Button
@@ -730,11 +723,11 @@ function HomeDetails() {
               </Button>
             </div>
           </div>
-          <div className="mt-6">
+          <div className="w-full lg:w-auto mt-6">
             <div className="sticky top-28">
               {" "}
               {/* This div handles the sticky positioning */}
-              <Card className="w-[23rem] shadow-xl">
+              <Card className="w-full lg:w-[23rem] shadow-xl">
                 <CardHeader>
                   <CardTitle className="font-400 text-xl">
                     {checkDates ? `${homePrice} night` : "Add dates for prices"}
@@ -882,6 +875,7 @@ function HomeDetails() {
           <>
             <RatingBreakdown reviews={home.reviews} />
             <hr className="mt-10" />
+            {/* Reviews */}
             <ReviewsSection
               reviews={home.reviews}
               isDialogOpen={isReviewDialogOpen}
@@ -899,13 +893,13 @@ function HomeDetails() {
           </div>
         )}
 
-        {/* Reviews */}
-
         <div
           id="location"
           className=" w-full flex flex-col gap-4 items-center mt-6"
         >
-          <p className="text-2xl font-semibold self-start">Where you’ll be</p>
+          <p className="text-xl md:text-2xl font-semibold self-start">
+            Where you'll be
+          </p>
           <p className="text-md self-start">{home.loc.city}</p>
           {position && (
             <GoogleMap
