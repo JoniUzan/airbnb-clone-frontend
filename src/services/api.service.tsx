@@ -2,16 +2,17 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: (() => {
-    // Check if in production mode
-    if (process.env.NODE_ENV === "production") {
-      return "/api"; // Relative URL in production
-    }
+    // // Check if in production mode
+    // if (process.env.NODE_ENV === "production") {
+    //   return "/api"; // Relative URL in production
+    // }
 
-    // Ensure BACKEND_IP is defined
-    const backendIp = import.meta.env.VITE_BACKEND_IP || "localhost";
-    console.log(backendIp);
+    // // Ensure BACKEND_IP is defined
+    // const backendIp = import.meta.env.VITE_BACKEND_IP || "localhost";
+    // console.log(backendIp);
 
-    return `http://${backendIp}:3000/api`; // Construct full URL for development
+    // return `http://${backendIp}:3000/api`; // Construct full URL for development
+    return import.meta.env.ITE_BACKEND_BASE_URL;
   })(),
 });
 
