@@ -221,35 +221,38 @@ function AccountPage() {
   ];
 
   return (
-    <div className="py-16 px-36">
-      <h1 className="text-4xl font-semibold mb-4">Account</h1>
-      <div className="flex gap-2 text-lg">
-        <p className="mb-8">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-16 max-w-7xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4">
+        Account
+      </h1>
+
+      <div className="flex flex-col sm:flex-row gap-2 text-base sm:text-lg mb-6 sm:mb-8">
+        <p>
           <span className="font-semibold">
             {loggedInUser?.user.firstName + " " + loggedInUser?.user.lastName},
-          </span>
-          {""} {loggedInUser?.user.email} ·{" "}
+          </span>{" "}
+          {loggedInUser?.user.email} ·
         </p>
-        <Link className="underline font-semibold" to={"/account/profile"}>
-          {" "}
+        <Link
+          className="underline font-semibold hover:text-gray-600 transition-colors"
+          to="/account/profile"
+        >
           Go to profile
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
         {cards.map((card, index) => (
           <Card
             key={index}
-            className="flex flex-col gap-4 items-start p-4 rounded-md shadow-xl"
+            className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 p-4 rounded-md shadow-md hover:shadow-lg transition-shadow"
           >
-            <CardHeader className="flex-shrink-0 mr-4 p-0">
-              {card.svg}
-            </CardHeader>
-            <div className="">
-              <CardTitle className="text-lg font-semibold">
+            <CardHeader className="flex-shrink-0 p-0">{card.svg}</CardHeader>
+            <div className="flex-1">
+              <CardTitle className="text-base sm:text-lg font-semibold mb-2">
                 {card.title}
               </CardTitle>
-              <CardContent className="p-0">
+              <CardContent className="p-0 text-sm sm:text-base">
                 <p>{card.paragraph}</p>
               </CardContent>
             </div>
@@ -257,9 +260,13 @@ function AccountPage() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center">
-        <h2 className="text-sm mb-2">Need to deactivate your account?</h2>
-        <p className="text-xs font-500 underline">Take care of that now</p>
+      <div className="flex flex-col items-center text-center">
+        <h2 className="text-xs sm:text-sm mb-2">
+          Need to deactivate your account?
+        </h2>
+        <button className="text-xs font-medium underline hover:text-gray-600 transition-colors">
+          Take care of that now
+        </button>
       </div>
     </div>
   );
