@@ -32,7 +32,7 @@ import { useCurrency } from "@/providers/CurrencyContext";
 type GuestType = "adults" | "children" | "infants" | "pets";
 
 function Reservation() {
-  const { currency,  } = useCurrency();
+  const { currency } = useCurrency();
   const { id } = useParams<{ id: string }>();
   const { checkDates, setCheckDates } = useDate();
   const [tempDates, setTempDates] = useState<DateRange | undefined>(checkDates);
@@ -318,9 +318,9 @@ function Reservation() {
     Math.round(Texas * 3.7);
 
   return (
-    <div>
-      <div>
-        <p className="p-12 mt-4 text-3xl font-semibold flex items-center gap-4">
+    <div className="w-full min-h-screen">
+      <div className="w-full">
+        <p className="p-4 md:p-12 mt-4 text-2xl md:text-3xl font-semibold flex items-center gap-4">
           <ChevronLeft
             className="cursor-pointer hover:bg-gray-100 rounded-full"
             onClick={handleGoBack}
@@ -328,13 +328,13 @@ function Reservation() {
           Request to book
         </p>
       </div>
-      <div className="flex justify-between px-16 gap-4">
-        <div>
-          <Card className="w-[37rem] border-none shadow-none ">
+      <div className="flex flex-col lg:flex-row justify-between px-4 md:px-16 gap-4">
+        <div className="w-full lg:w-auto">
+          <Card className="w-full lg:w-[37rem] border-none shadow-none">
             <CardHeader>
               {loggedInUser && (
                 <div className="flex flex-col mb-4">
-                  <div className="flex flex-col  gap-4 mb-2">
+                  <div className="flex flex-col gap-4 mb-2">
                     <CircleCheck className="w-8 h-8" />
                     <span className="font-semibold text-xl">
                       Hi, you're logged in
@@ -362,10 +362,10 @@ function Reservation() {
                       Edit
                     </p>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[38rem] mb-10 max-h-[40rem] overflow-y-auto">
-                    <div className="">
-                      <p className="text-xl font-semibold">Select dates</p>
-                      <p className="text-sm text-gray-700">
+                  <DialogContent className="w-[full]  max-w-[full]  mb-10 max-h-[90vh] overflow-y-auto">
+                    <div className="flex flex-col ml-10 sm:ml-0">
+                      <p className="text-md font-semibold ">Select dates</p>
+                      <p className="text-xs text-gray-700">
                         Add your travel dates for exact pricing
                       </p>
                     </div>
@@ -379,6 +379,19 @@ function Reservation() {
                       numberOfMonths={2}
                       fromDate={new Date()}
                       initialFocus
+                      className="hidden md:block max-h-[60vh] "
+                    />
+                    <Calendar
+                      disabled={reservedDates}
+                      mode="range"
+                      selected={tempDates}
+                      onSelect={(ev) => {
+                        setTempDates(ev as DateRange | undefined);
+                      }}
+                      numberOfMonths={1}
+                      fromDate={new Date()}
+                      initialFocus
+                      className="block md:hidden max-h-[60vh] scale-90 sm:scale-100"
                     />
                     <div className="flex justify-end gap-2 mt-4">
                       <Button
@@ -398,7 +411,7 @@ function Reservation() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <div className="flex justify-between ">
+              <div className="flex justify-between">
                 <div className="flex flex-col gap-1">
                   <p className="font-semibold">Guests</p>
                   <p className="">
@@ -436,7 +449,7 @@ function Reservation() {
                       Edit
                     </p>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[23rem] mb-10 max-h-[40rem] overflow-y-auto">
+                  <DialogContent className="w-[90vw] max-w-[23rem] mb-10 max-h-[90vh] overflow-y-auto">
                     <div>
                       <p className="text-xl font-semibold">Guests</p>
                     </div>
@@ -477,7 +490,7 @@ function Reservation() {
                         className="underline hover:bg-gray-100"
                         onClick={handleCancle}
                       >
-                        Cancle
+                        Cancel
                       </Button>
                       <Button onClick={handleGuestSave}>Save</Button>
                     </div>
@@ -486,11 +499,12 @@ function Reservation() {
               </div>
             </CardContent>
             <CardFooter className="border-t">
-              <div className="mt-8 flex flex-col gap-4">
+              <div className="mt-8 flex flex-col gap-4 w-full">
                 <p className="text-xl font-semibold">Choose how to pay</p>
                 <Button
                   onClick={handlePay}
                   disabled={!loggedInUser || isCreating}
+                  className="w-full"
                 >
                   {isCreating ? <span>Processing...</span> : "PayPal"}
                 </Button>
@@ -505,10 +519,13 @@ function Reservation() {
               {loggedInUser ? (
                 ""
               ) : (
-                <div>
-                  <Button className="mt-6" onClick={() => setModalOpen(true)}>
+                <div className="w-full">
+                  <Button
+                    className="mt-6 w-full"
+                    onClick={() => setModalOpen(true)}
+                  >
                     Login
-                  </Button>{" "}
+                  </Button>
                   <Modal
                     isOpen={isModalOpen}
                     onClose={() => setModalOpen(false)}
@@ -518,21 +535,21 @@ function Reservation() {
             </CardFooter>
           </Card>
         </div>
-        <div className="w-[27rem] relative">
-          <div className="sticky top-20">
-            <Card className="border">
+        <div className="w-full lg:w-[27rem] relative">
+          <div className="lg:sticky lg:top-20">
+            <Card className="border w-full">
               <CardHeader>
                 <CardTitle className="font-400 text-xl">
                   <div className="flex items-center gap-4">
                     <img
                       src={home.imgUrls[0]}
                       alt={`${home.name} - Main Image`}
-                      className="w-[6.3rem] h-[6.3rem] object-cover rounded-lg"
+                      className="w-20 h-20 md:w-[6.3rem] md:h-[6.3rem] object-cover rounded-lg"
                     />
                     <div className="flex flex-col gap-1">
                       <p className="text-[1rem]">{home.name}</p>
                       <p className="text-sm font-400">{home.roomType}</p>
-                      <p className="flex items-center gap-1 text-sm">
+                      <p className="flex items-center gap-1 text-sm flex-wrap">
                         <Star fill="black" width="12px" />
                         <span>
                           {calculateOverallAverageRating(home.reviews)}
@@ -584,7 +601,6 @@ function Reservation() {
                   <div className="flex justify-between">
                     <p className="underline">Airbnb service fee</p>
                     <p>
-                      {" "}
                       {currency === "USD"
                         ? `$${AirbnbServiceFee}`
                         : `₪${Math.round(AirbnbServiceFee * 3.7)}`}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import logo from "../../assets/airbnb-logo.webp";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,18 +15,23 @@ import CurrencySelector from "./CurrencySelector";
 function TripsHeader() {
   const { loggedInUser, logout } = useAuth();
   const [, setModalOpen] = useState(false);
+
   return (
     <>
-      <header className="flex justify-between items-center px-24 pt-9 sticky top-0 z-20 bg-white pb-7 h-20 border-b">
+      <header className="flex justify-between items-center px-4 md:px-12 lg:px-24 pt-4 lg:pt-9 sticky top-0 z-20 bg-white pb-4 lg:pb-7 h-16 lg:h-20 border-b">
         <Link to="/">
-          <img className="w-[105px] h-[60px]" src={logo} alt="" />
+          <img
+            className="w-[85px] h-[45px] md:w-[105px] md:h-[60px]"
+            src={logo}
+            alt=""
+          />
         </Link>
-        <div className="flex justify-center items-center gap-6">
-          <Link to="/becomeAhost" className="font-600 text-sm">
+        <div className="flex justify-center items-center gap-2 md:gap-4 lg:gap-6">
+          <Link to="/becomeAhost" className="hidden md:block font-600 text-sm">
             Airbnb your home
           </Link>
           <CurrencySelector />
-          <div className="flex items-center border border-gray-300 rounded-full p-3 gap-4 hover:shadow-lg">
+          <div className="flex items-center border border-gray-300 rounded-full p-2 md:p-3 gap-2 md:gap-4 hover:shadow-lg">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex gap-2">
                 <Menu className="w-4 h-4 self-center" />
@@ -60,7 +64,7 @@ function TripsHeader() {
                   )}
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="relative right-12 top-4 w-60 flex flex-col gap-2">
+              <DropdownMenuContent className="relative right-0 md:right-12 top-4 w-60 flex flex-col gap-2">
                 {loggedInUser ? (
                   <>
                     <Link to="/account/messages">
@@ -87,7 +91,6 @@ function TripsHeader() {
                     <Link to={"/hostPage"}>
                       <DropdownMenuItem>Manage listings</DropdownMenuItem>
                     </Link>
-
                     <Link to={"/account"}>
                       <DropdownMenuItem>Account</DropdownMenuItem>
                     </Link>
@@ -97,7 +100,6 @@ function TripsHeader() {
                     <DropdownMenuItem
                       onClick={() => {
                         logout();
-                        // Navigate after logging out
                         window.location.href = "/";
                       }}
                     >
