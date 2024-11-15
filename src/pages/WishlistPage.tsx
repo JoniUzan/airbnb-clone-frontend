@@ -3,11 +3,14 @@ import { fetchHomeById, fetchUserWishlists } from "@/lib/http";
 import { useAuth } from "@/providers/user.context";
 import { IWishlist, IHome, IWishlistResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "@/components/ui/Loader";
+import { Button } from "@/components/ui/button";
 
 function WishlistPage() {
   const { loggedInUser } = useAuth();
   const userId = loggedInUser?.user._id;
+  const navigate = useNavigate();
 
   // State to hold home data
   const [homeData, setHomeData] = useState<{ [key: string]: IHome }>({});
@@ -43,7 +46,11 @@ function WishlistPage() {
   }, [userWishlists]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen ">
+        <Loader variant="page" />
+      </div>
+    );
   }
 
   if (error) {
@@ -51,7 +58,14 @@ function WishlistPage() {
   }
 
   if (!userWishlists || userWishlists.length === 0) {
-    return <div>NO WISHLIST FOUND</div>;
+    return (
+      <div className=" flex flex-col items-center justify-center h-screen gap-6">
+        <div>NO WISHLIST FOUND</div>
+        <Button onClick={() => navigate("/")} variant={"new"}>
+          Back To Home Page
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -59,7 +73,7 @@ function WishlistPage() {
       <div className="mx-24">
         <h1 className="text-3xl font-bold font-montserrat mb-4">Wishlists</h1>
 
-        <div className="grid grid-cols-4 font-montserrat">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 font-montserrat">
           {userWishlists.map((wishlist: IWishlist) => {
             // Use the first item from the wishlist
             const firstItemId = wishlist.list[0];

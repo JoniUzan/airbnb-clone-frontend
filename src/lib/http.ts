@@ -65,7 +65,7 @@ export async function fetchHomeCountByFilers(
 
 export async function fetchUserWishlists(
   userId: string | undefined
-): Promise<IWishlist[]> {
+) {
   try {
     const response = await api.get(`/user/getWishlist?userId=${userId}`);
     return response.data; // Return the data property which should contain the list of wishlists
@@ -91,7 +91,7 @@ export async function addToWishlist(
 export async function fetchWishlistByName(
   userId: string,
   name: string
-): Promise<IWishlistResponse | null> {
+) {
   try {
     const response = await api.get<IWishlistResponse>(
       `/user/getWishlistByName?userId=${userId}&title=${name}`

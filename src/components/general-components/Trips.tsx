@@ -71,7 +71,7 @@ function Trips() {
   if (reservationsLoading)
     return (
       <div className="flex items-center justify-center h-screen ">
-        <Loader />
+        <Loader  variant="page"/>
       </div>
     );
 

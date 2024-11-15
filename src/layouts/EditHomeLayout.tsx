@@ -132,7 +132,7 @@ function EditHomeLayout() {
               variant={"new"}
               disabled={isLoading} // Disable the button while loading
             >
-              {isLoading ? <Loader /> : "Save"}
+              {isLoading ? <Loader variant="button" /> : "Save"}
             </Button>
           </div>
         </footer>

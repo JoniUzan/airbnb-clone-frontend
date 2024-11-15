@@ -201,7 +201,7 @@ function HomeDetails() {
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-screen ">
-        <Loader />
+        <Loader variant="page"/>
       </div>
     );
   if (error) return <div>Error loading home details</div>;

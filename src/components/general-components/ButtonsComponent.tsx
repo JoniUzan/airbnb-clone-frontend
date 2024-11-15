@@ -46,7 +46,7 @@ const Buttons: React.FC<ButtonsProps> = ({
         <button
           key={index}
           aria-pressed={chosenButton === button}
-          className={`px-4 py-2 rounded-full w-14 transition duration-150 ease-in-out text-xs ${
+          className={`sm:px-4 px-2 py-2 rounded-full w-10 sm:w-14 transition duration-150 ease-in-out text-xs ${
             chosenButton === button
               ? "bg-black text-white"
               : "bg-white border-[1px] border-gray-200 hover:border-black"

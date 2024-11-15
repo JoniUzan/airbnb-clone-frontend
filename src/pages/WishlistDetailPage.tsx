@@ -1,5 +1,6 @@
 import HomesList from "@/components/general-components/HomesList";
 import GoogleMap from "@/components/googleMaps/GoogleMap";
+import Loader from "@/components/ui/Loader";
 import { fetchHomeById, fetchWishlistByName } from "@/lib/http";
 import { useAuth } from "@/providers/user.context";
 import { IWishlistResponse, IHome } from "@/types";
@@ -48,7 +49,12 @@ function WishlistDetailPage() {
     Navigate(-1);
   }
 
-  if (wishlistLoading || homesLoading) return <div>Loading...</div>;
+  if (wishlistLoading || homesLoading)
+    return (
+      <div className="flex items-center justify-center h-screen ">
+        <Loader variant="page" />
+      </div>
+    );
   if (wishlistError)
     return <div>Error fetching wishlist: {wishlistError.message}</div>;
   if (homesError) return <div>Error fetching homes: {homesError.message}</div>;

@@ -295,7 +295,7 @@ function AddPhotosPage() {
                     className="text-white bg-gray-800 hover:bg-black cursor-pointer p-6 text-md"
                     onClick={handleUpload}
                   >
-                    {uploadIsLoading ? <Loader /> : "Upload"}
+                    {uploadIsLoading ? <Loader variant="button" /> : "Upload"}
                   </Button>
                 </div>
               </DialogFooter>
