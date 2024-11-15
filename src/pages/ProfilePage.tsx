@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAuth } from "@/providers/user.context";
+import { Cake, List, Mail, User } from "lucide-react";
 
 interface CardData {
   id: number;
@@ -44,13 +45,13 @@ const ProfilePage = () => {
     const initialData: CardData[] = [
       {
         id: 1,
-        icon: <span className="text-gray-500">✉️</span>, // Email icon
+        icon: <span className=""><Mail /></span>, // Email icon
         text: "Email",
         value: loggedInUser.user.email || "",
       },
       {
         id: 2,
-        icon: <span className="text-gray-500">👤</span>, // Name icon
+        icon: <span className=""><User /></span>, // Name icon
         text: "Name",
         value: `${loggedInUser.user.firstName || ""} ${
           loggedInUser.user.lastName || ""
@@ -58,13 +59,13 @@ const ProfilePage = () => {
       },
       {
         id: 3,
-        icon: <span className="text-gray-500">🎂</span>, // Birthday icon
+        icon: <span className=""><Cake /></span>, // Birthday icon
         text: "Birthday",
         value: formattedBirthday,
       },
       {
         id: 4,
-        icon: <span className="text-gray-500">📋</span>, // Wishlists icon
+        icon: <span className=""><List /></span>, // Wishlists icon
         text: "Wishlists",
         value: wishlistsTitles,
       },
