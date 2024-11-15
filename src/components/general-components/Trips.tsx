@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IHome } from "@/types";
 import { CalendarDays, MapPin, User } from "lucide-react";
+import Loader from "../ui/Loader";
 
 type PopulateReservationResponse = {
   _id: string;
@@ -67,7 +68,12 @@ function Trips() {
     fetchHomes();
   }, [reservations]);
 
-  if (reservationsLoading) return <div>Loading...</div>;
+  if (reservationsLoading)
+    return (
+      <div className="flex items-center justify-center h-screen ">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="p-8 md:p-16 lg:p-24">
@@ -143,7 +149,7 @@ function Trips() {
           {pastTrips && pastTrips.length > 0 && (
             <div className="mt-16">
               <h2 className="text-3xl font-semibold mb-8">Where you've been</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {pastTrips.map((reservation) => {
                   const home = homes[reservation.home._id];
                   const firstImage = home?.imgUrls[0];

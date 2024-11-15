@@ -12,10 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Plus, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import {
-  useOutletContext,
-  useSearchParams,
-} from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { Home } from "@/layouts/BecomeAhostLayout";
 import api from "@/services/api.service";
 import { useToast } from "@/components/ui/use-toast";
@@ -24,6 +21,8 @@ import Loader from "@/components/ui/Loader";
 function AddPhotosPage() {
   const [, setNewHome] =
     useOutletContext<[Home, React.Dispatch<React.SetStateAction<Home>>]>();
+
+  const [uploadIsLoading, setUploadIsLoading] = useState(false);
 
   const { toast } = useToast();
 
@@ -40,7 +39,6 @@ function AddPhotosPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [, setSearchParams] = useSearchParams();
   const [isDisabled, setIsDisabled] = useState(true);
- 
 
   useEffect(() => {
     if (selectedImages.length + imageUrls.length >= 5) {
@@ -109,9 +107,7 @@ function AddPhotosPage() {
 
     try {
       setIsDisabled(true);
-      toast({
-        description: <Loader />,
-      });
+      setUploadIsLoading(true);
       const response = await api.post("/images/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -146,6 +142,7 @@ function AddPhotosPage() {
     } finally {
       setIsDialogOpen(false);
       setIsDisabled(false);
+      setUploadIsLoading(false);
     }
   };
 
@@ -298,7 +295,7 @@ function AddPhotosPage() {
                     className="text-white bg-gray-800 hover:bg-black cursor-pointer p-6 text-md"
                     onClick={handleUpload}
                   >
-                    Upload
+                    {uploadIsLoading ? <Loader /> : "Upload"}
                   </Button>
                 </div>
               </DialogFooter>

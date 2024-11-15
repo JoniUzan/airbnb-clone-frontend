@@ -40,6 +40,7 @@ import GoogleMap from "../googleMaps/GoogleMap";
 import { useCurrency } from "@/providers/CurrencyContext";
 import { Textarea } from "../ui/textarea";
 import { useAuth } from "@/providers/user.context";
+import Loader from "../ui/Loader";
 
 const monthNames = [
   "Jan",
@@ -197,7 +198,12 @@ function HomeDetails() {
     };
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen ">
+        <Loader />
+      </div>
+    );
   if (error) return <div>Error loading home details</div>;
   if (!home) return <div>No home details available.</div>;
 
