@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useAuth } from "@/providers/user.context";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface ModalProps {
   setIsRegisterModalOpen: (open: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({
+const LoginModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   setIsRegisterModalOpen,
@@ -19,6 +20,8 @@ const Modal: React.FC<ModalProps> = ({
   const [show, setShow] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { login, handleGoogleSuccess } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -36,8 +39,12 @@ const Modal: React.FC<ModalProps> = ({
 
   const handleClickRegister = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsRegisterModalOpen(true);
-    onClose(); // Close the login dialog
+    if (location.pathname === "/auth/login") {
+      navigate("/auth/register");
+    } else {
+      setIsRegisterModalOpen(true);
+      onClose();
+    }
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -154,4 +161,4 @@ const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export default Modal;
+export default LoginModal;

@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 import {
@@ -11,16 +11,9 @@ import {
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/providers/user.context";
-import Modal from "../general-components/LoginModalComponent";
 
 function HostHeader() {
   const { loggedInUser, logout } = useAuth();
-  const [isModalOpen, setModalOpen] = useState(false);
-  useEffect(() => {
-    if (!loggedInUser) {
-      setModalOpen(true);
-    }
-  }, [loggedInUser]);
 
   function deleteNewHomeFromLocalStorage() {
     localStorage.removeItem("newHome");
@@ -86,77 +79,65 @@ function HostHeader() {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="relative right-12 top-4 w-60 flex flex-col gap-2">
-              {loggedInUser ? (
-                <>
-                  <Link to="/account/messages">
-                    <DropdownMenuItem
-                      onClick={deleteNewHomeFromLocalStorage}
-                      className="font-semibold"
-                    >
-                      Messages
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to="/account/notifications">
-                    <DropdownMenuItem
-                      onClick={deleteNewHomeFromLocalStorage}
-                      className="font-semibold"
-                    >
-                      Notifications
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to="/trips">
-                    <DropdownMenuItem
-                      onClick={deleteNewHomeFromLocalStorage}
-                      className="font-semibold"
-                    >
-                      Trips
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link to="/wishlists">
-                    <DropdownMenuItem
-                      onClick={deleteNewHomeFromLocalStorage}
-                      className="font-semibold"
-                    >
-                      Wishlists
-                    </DropdownMenuItem>
-                  </Link>
-                  <DropdownMenuSeparator />
-                  <Link to={"/"}>
-                    <DropdownMenuItem onClick={deleteNewHomeFromLocalStorage}>
-                      Switch to traveling
-                    </DropdownMenuItem>
-                  </Link>
-
-                  <Link to={"/account"}>
-                    <DropdownMenuItem onClick={deleteNewHomeFromLocalStorage}>
-                      Account
-                    </DropdownMenuItem>
-                  </Link>
-                  <DropdownMenuSeparator />
+              <>
+                <Link to="/account/messages">
                   <DropdownMenuItem
-                    onClick={() => {
-                      deleteNewHomeFromLocalStorage();
-                      logout();
-                    }}
+                    onClick={deleteNewHomeFromLocalStorage}
+                    className="font-semibold"
                   >
-                    Logout
+                    Messages
                   </DropdownMenuItem>
-                </>
-              ) : (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Gift cards</DropdownMenuItem>
-                  <Link to="/becomeAhost" className="text-sm">
-                    <DropdownMenuItem>Airbnb your home</DropdownMenuItem>
-                  </Link>
-                  <DropdownMenuItem>Help center</DropdownMenuItem>
-                </>
-              )}
+                </Link>
+                <Link to="/account/notifications">
+                  <DropdownMenuItem
+                    onClick={deleteNewHomeFromLocalStorage}
+                    className="font-semibold"
+                  >
+                    Notifications
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/trips">
+                  <DropdownMenuItem
+                    onClick={deleteNewHomeFromLocalStorage}
+                    className="font-semibold"
+                  >
+                    Trips
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/wishlists">
+                  <DropdownMenuItem
+                    onClick={deleteNewHomeFromLocalStorage}
+                    className="font-semibold"
+                  >
+                    Wishlists
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link to={"/"}>
+                  <DropdownMenuItem onClick={deleteNewHomeFromLocalStorage}>
+                    Switch to traveling
+                  </DropdownMenuItem>
+                </Link>
+
+                <Link to={"/account"}>
+                  <DropdownMenuItem onClick={deleteNewHomeFromLocalStorage}>
+                    Account
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    deleteNewHomeFromLocalStorage();
+                    logout();
+                  }}
+                >
+                  Logout
+                </DropdownMenuItem>
+              </>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </header>
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen} />
     </>
   );
 }

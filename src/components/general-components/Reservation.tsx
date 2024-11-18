@@ -20,7 +20,7 @@ import { useGuestContext } from "@/providers/Guest-Context";
 import { Button } from "../ui/button";
 import { useAuth } from "@/providers/user.context";
 import { useEffect, useState } from "react";
-import Modal from "./LoginModalComponent";
+import LoginModal from "./LoginModalComponent";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Calendar } from "../ui/calendar";
 import { Card as GuestCard } from "./GuestCard";
@@ -526,7 +526,7 @@ function Reservation() {
                   >
                     Login
                   </Button>
-                  <Modal
+                  <LoginModal
                     isOpen={isModalOpen}
                     onClose={() => setModalOpen(false)}
                   />

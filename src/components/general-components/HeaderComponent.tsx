@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Modal from "./LoginModalComponent";
+import LoginModal from "./LoginModalComponent";
 import { useAuth } from "@/providers/user.context";
 import logo from "../../assets/airbnb-logo.webp"; // Original logo
 import { Button } from "../ui/button";
@@ -325,7 +325,7 @@ function HeaderComponent() {
         </div>
         <hr className="pt-2 pb-4 mt-3" />
       </div>
-      <Modal
+      <LoginModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         setIsRegisterModalOpen={setIsRegisterModalOpen}
