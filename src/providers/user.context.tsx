@@ -48,9 +48,11 @@ interface LoginData {
 }
 
 interface RegisterData {
+  username: string;
   email: string;
   password: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface LoginResponse {

@@ -19,6 +19,7 @@ import CurrencySelector from "./CurrencySelector";
 import { fetchNotifications } from "@/lib/http";
 import { INotification } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import RegisterModal from "./RegisterModal";
 
 function HeaderComponent() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -31,6 +32,7 @@ function HeaderComponent() {
   const { checkDates } = useDate();
   const { guestCounts } = useGuestContext();
   const [selectedDestination, setSelectedDestination] = useState<string>("");
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const { data: notifications } = useQuery<INotification[], Error>({
     queryKey: ["notifications", loggedInUser?.user._id],
@@ -289,7 +291,9 @@ function HeaderComponent() {
                       >
                         Log in
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setModalOpen(true)}>
+                      <DropdownMenuItem
+                        onClick={() => setIsRegisterModalOpen(true)}
+                      >
                         Sign up
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
@@ -321,8 +325,15 @@ function HeaderComponent() {
         </div>
         <hr className="pt-2 pb-4 mt-3" />
       </div>
-
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        setIsRegisterModalOpen={setIsRegisterModalOpen}
+      />
+      <RegisterModal
+        isOpen={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
+      />
     </>
   );
 }
