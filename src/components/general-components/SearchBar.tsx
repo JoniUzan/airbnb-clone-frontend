@@ -13,6 +13,10 @@ import {
 import Guests from "./Guests";
 import { DateRange } from "@/types";
 import { useDate } from "@/hooks/useDate";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 
 const monthNames = [
   "Jan",
@@ -40,40 +44,82 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { checkDates, setCheckDates } = useDate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [inputValue, setInputValue] = useState<string>(selectedDestination);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
+
+  const {
+    ready,
+    value,
+    setValue,
+    suggestions: { status, data },
+    clearSuggestions,
+  } = usePlacesAutocomplete();
 
   useEffect(() => {
-    if (dropdownOpen) {
+    if (menuDropdownOpen) {
       setTimeout(() => {
         inputRef.current?.focus();
-      }, 100); // Adjust delay as needed
+      }, 100);
     }
-  }, [dropdownOpen]);
+  }, [menuDropdownOpen]);
 
   useEffect(() => {
     setInputValue(selectedDestination);
   }, [selectedDestination]);
 
-  const handleSelection = (destination: string): void => {
+  const handleSelect = async (address: string) => {
+    setValue(address, false);
+    clearSuggestions();
+    setShowSuggestions(false);
+    setMenuDropdownOpen(false);
+
+    const results = await getGeocode({ address });
+    const { lat, lng } = await getLatLng(results[0]);
+    setSelectedDestination(address);
+    console.log("Selected location:", { lat, lng });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    setInputValue(newValue);
+
+    // Only show suggestions if there's input text
+    setShowSuggestions(newValue.length > 0);
+    // Close the menu dropdown when typing
+    if (menuDropdownOpen) setMenuDropdownOpen(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && value) {
+      handleSelect(value);
+    }
+  };
+
+  const handlePredefinedSelection = (destination: string): void => {
     setSelectedDestination(destination);
-    setDropdownOpen(false);
+    setMenuDropdownOpen(false);
+    setShowSuggestions(false);
+    setValue(destination, false);
+    setInputValue(destination);
   };
 
   return (
     <div className="flex flex-col items-center text-xs ">
       <div className="flex justify-center  items-center border border-gray-300 rounded-full shadow-md shadow-gray-300 font-500">
         <div className="p-0 sm:p-3 md:px-6 flex-1 text-left hover:bg-gray-200 rounded-full ">
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+          <DropdownMenu
+            open={menuDropdownOpen}
+            onOpenChange={setMenuDropdownOpen}
+          >
             <div className="flex flex-col ">
               <DropdownMenuTrigger asChild>
                 <Button
                   variant={null}
                   className="h-0 flex justify-start text-xs text-left"
-                  onClick={() => setDropdownOpen(true)}
                 >
-                  {/* Update the button label based on selectedDestination */}
-                  <div className="text-black font-600 ">Where</div>
+                  <div className="text-black font-600">Where</div>
                 </Button>
               </DropdownMenuTrigger>
               <input
@@ -81,28 +127,40 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 ref={inputRef}
                 className="ml-4 w-16 sm:w-full border-none outline-none bg-transparent focus:ring-0 focus:border-none focus-visible:ring-0 focus-visible:border-none focus:outline-none focus:shadow-none"
                 style={{ boxShadow: "none", border: "none", outline: "none" }}
-                placeholder={selectedDestination || "Search destinations"}
+                placeholder={
+                  !ready && !selectedDestination
+                    ? "Loading..."
+                    : selectedDestination || "Search destinations"
+                }
+                disabled={!ready}
                 onClick={(e: React.MouseEvent<HTMLInputElement>) => {
                   e.stopPropagation();
-                  e.preventDefault();
+                  // Show suggestions if there's input text
+                  if (inputValue) setShowSuggestions(true);
                 }}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setInputValue(e.target.value); // Update the temporary input value as the user types
-                }}
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                  if (e.key === "Enter") {
-                    setSelectedDestination(inputValue); // Commit the input value to the selected destination
-                    setDropdownOpen(false); // Close the dropdown on Enter
-                  }
-                }}
-                value={inputValue} // Show the current input value in the input field
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                value={inputValue}
               />
+              {status === "OK" && showSuggestions && (
+                <ul className="absolute w-[30%] bg-white rounded-3xl shadow-lg mt-10  max-h-[500px] overflow-y-auto z-[9999] border border-gray-200">
+                  {data.map(({ place_id, description }) => (
+                    <li
+                      key={place_id}
+                      className="p-4 hover:bg-gray-100 cursor-pointer text-sm transition-colors border-b  last:border-b-0 border-gray-100 text-gray-700"
+                      onClick={() => handleSelect(description)}
+                    >
+                      {description}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-            <DropdownMenuContent className="rounded-3xl relative  top-4 p-6">
+            <DropdownMenuContent className="rounded-3xl relative top-4 p-6">
               <DropdownMenuLabel>Search by region</DropdownMenuLabel>
               <div className="grid grid-cols-2 sm:grid-cols-3">
                 <DropdownMenuItem
-                  onClick={() => handleSelection("I'm flexible")}
+                  onClick={() => handlePredefinedSelection("I'm flexible")}
                 >
                   <div className="space-y-2">
                     <img
@@ -113,7 +171,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     <p className="font-500">I'm flexible</p>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSelection("Europe")}>
+                <DropdownMenuItem
+                  onClick={() => handlePredefinedSelection("Europe")}
+                >
                   <div className="space-y-2">
                     <img
                       src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg?im_w=320"
@@ -123,7 +183,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     <p className="font-500">Europe</p>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSelection("London")}>
+                <DropdownMenuItem
+                  onClick={() => handlePredefinedSelection("London")}
+                >
                   <div className="space-y-2">
                     <img
                       src="https://a0.muscache.com/im/pictures/ea5598d7-2b07-4ed7-84da-d1eabd9f2714.jpg?im_w=320"
@@ -135,7 +197,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                  onClick={() => handleSelection("United States")}
+                  onClick={() => handlePredefinedSelection("United States")}
                 >
                   <div className="space-y-2">
                     <img
@@ -146,7 +208,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     <p className="font-500">United States</p>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSelection("Israel")}>
+                <DropdownMenuItem
+                  onClick={() => handlePredefinedSelection("Israel")}
+                >
                   <div className="space-y-2">
                     <img
                       src="https://a0.muscache.com/im/pictures/09be1400-6a42-4a4f-90f6-897e50110031.jpg?im_w=320"
@@ -157,7 +221,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleSelection("South America")}
+                  onClick={() => handlePredefinedSelection("South America")}
                 >
                   <div className="space-y-2">
                     <img
