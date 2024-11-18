@@ -9,6 +9,7 @@ import { INotification } from "@/types";
 import { useAuth } from "@/providers/user.context";
 import notificationlogo from "../assets/airbnb-notification.png";
 import { X } from "lucide-react";
+import Loader from "@/components/ui/Loader";
 
 const NotificationPage: React.FC = () => {
   const { loggedInUser } = useAuth();
@@ -101,7 +102,11 @@ const NotificationPage: React.FC = () => {
   }, [userId]);
 
   if (isLoading) {
-    return <div className="text-center">Loading notifications...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen ">
+        <Loader variant="page" />
+      </div>
+    );
   }
 
   if (!notifications || notifications.length === 0) {

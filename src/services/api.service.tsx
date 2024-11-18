@@ -1,24 +1,20 @@
 import axios from "axios";
 
-// const api = axios.create({
-//   baseURL: (() => {
-//     // // Check if in production mode
-//     // if (process.env.NODE_ENV === "production") {
-//     //   return "/api"; // Relative URL in production
-//     // }
-
-//     // // Ensure BACKEND_IP is defined
-//     // const backendIp = import.meta.env.VITE_BACKEND_IP || "localhost";
-//     // console.log(backendIp);
-
-//     // return `http://${backendIp}:3000/api`; // Construct full URL for development
-//     ;
-//   })(),
-// });
-
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+  baseURL: (() => {
+    // Check the environment mode using Vite's `import.meta.env.MODE`
+    if (import.meta.env.MODE === "production") {
+      // Use the production base URL from the environment
+      return import.meta.env.VITE_BACKEND_BASE_URL;
+    }
+
+    return "http://localhost:3000";
+  })(),
 });
+
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+// });
 
 api.interceptors.request.use(
   (config) => {
