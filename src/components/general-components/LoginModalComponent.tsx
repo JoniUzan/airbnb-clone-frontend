@@ -8,9 +8,14 @@ import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setIsRegisterModalOpen: (open: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  setIsRegisterModalOpen,
+}) => {
   const [show, setShow] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { login, handleGoogleSuccess } = useAuth();
@@ -27,6 +32,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
+  };
+
+  const handleClickRegister = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsRegisterModalOpen(true);
+    onClose(); // Close the login dialog
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -100,6 +111,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <hr className="w-[50%] border-t-2 border-gray-200" />
           <p className="text-xs">or</p>
           <hr className="w-[50%] border-t-2 border-gray-200" />
+        </div>
+        <div className="flex justify-center">
+          <Button
+            onClick={handleClickRegister}
+            variant="ghost"
+            className="w-96 text-xs"
+          >
+            Dont have an account?
+            <span className="font-bold underline"> Register</span>
+          </Button>
         </div>
         <div className="w-full flex justify-center pt-4">
           <GoogleLogin
