@@ -8,7 +8,7 @@ const api = axios.create({
       return import.meta.env.VITE_BACKEND_BASE_URL;
     }
 
-    return "http://localhost:3000";
+    return "http://localhost:3000/api";
   })(),
 });
 
