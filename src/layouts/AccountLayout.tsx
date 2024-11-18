@@ -1,15 +1,13 @@
 import TripsHeader from "@/components/general-components/TripsHeader";
 import { Outlet } from "react-router-dom";
 
-function TripsLayout() {
+function AccountLayout() {
   return (
     <div>
-      <>
-        <TripsHeader />
-        <Outlet />
-      </>
+      <TripsHeader />
+      <Outlet />
     </div>
   );
 }
 
-export default TripsLayout;
+export default AccountLayout;
